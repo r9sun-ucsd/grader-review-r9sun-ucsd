@@ -14,22 +14,30 @@ then
     cp GradeServer.java grading-area/
     cp Server.java grading-area/
     cp TestListExamples.java grading-area/
+    cp -r lib grading-area/
 
 
     javac -cp ".;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar" grading-area/*.java > output.txt 2>&1
     if [[ $? == 1 ]]
     then
         cat output.txt
+        exit 1
     fi 
-    java -cp ".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar" org.junit.runner.JUnitCore grading-area/TestListExamples.java > test.txt 2>&1
+    java -cp ".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar;grading-area" org.junit.runner.JUnitCore TestListExamples > test.txt
+    tests=$(cat test.txt | grep -o 'Tests run: [0-9]*' | grep -o '[0-9]*')
+    fails=$(cat test.txt | grep -o 'Failures: [0-9]*' | grep -o '[0-9]*')
 
+    if [[ $fails == "" ]]
+    then
+        echo Perfect score!
+        exit 0
+    else 
+    correct=$tests - $fails
+    echo "Score: "$correct"/"$tests
+    fi
 else
     echo Please provide the correct files!
     exit 1
 fi
 
-# Draw a picture/take notes on the directory structure that's set up after
-# getting to this point
 
-# Then, add here code to compile and run, and do any post-processing of the
-# tests

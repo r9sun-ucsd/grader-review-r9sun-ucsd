@@ -26,14 +26,14 @@ then
     java -cp ".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar;grading-area" org.junit.runner.JUnitCore TestListExamples > test.txt
     tests=$(cat test.txt | grep -o 'Tests run: [0-9]*' | grep -o '[0-9]*')
     fails=$(cat test.txt | grep -o 'Failures: [0-9]*' | grep -o '[0-9]*')
-
     if [[ $fails == "" ]]
     then
+        tests=$(cat test.txt | grep -o '([0-9] tests)' | grep -o '[0-9]*')
         echo Perfect score!
-        exit 0
+        echo "Score: "$tests"/"$tests
     else 
-    correct=$tests - $fails
-    echo "Score: "$correct"/"$tests
+        correct=$(expr $tests - $fails)
+        echo "Score: "$correct"/"$tests
     fi
 else
     echo Please provide the correct files!

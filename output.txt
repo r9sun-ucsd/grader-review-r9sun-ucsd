@@ -1,8 +1,0 @@
-grading-area\TestListExamples.java:18: error: incompatible types: List<String> cannot be converted to StringChecker
-    assertEquals(expected, ListExamples.filter(filterTest, new isB()));
-                                               ^
-grading-area\TestListExamples.java:25: error: incompatible types: List<String> cannot be converted to StringChecker
-    assertEquals(expected, ListExamples.filter(filterTest, new isB()));
-                                               ^
-Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
-2 errors
